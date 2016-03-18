@@ -38,4 +38,9 @@ angular.module('app', [])
         return user.name.indexOf(val) !== -1;
       })
     }
+  })
+  .filter("mysort", function() {
+    return function(users) {
+      return _.orderBy(users, 'time', 'desc')
+    }
   });

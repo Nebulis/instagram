@@ -12,7 +12,7 @@
             <input type="text" ng-disabled="app.loading" placeholder="Enter name... Press enter to add name" ng-keypress="app.save($event)" ng-model="app.name"/>
         </div>
         <div id="list">
-            <div class="user" ng-repeat="(id,user) in app.users | myfilter:app.name">
+            <div class="user" ng-repeat="(id,user) in app.users | myfilter:app.name | mysort">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-header-content">
