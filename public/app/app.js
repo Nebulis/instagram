@@ -28,7 +28,7 @@ class AppController {
   }
 }
 
-angular.module('app', [])
+angular.module('app', ["xeditable"])
   .controller('AppController', AppController)
   .filter("myfilter", function() {
     return function(users, val) {
