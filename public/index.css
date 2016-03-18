@@ -109,3 +109,7 @@ span.editable-click {
   color: hotpink;
   cursor: pointer
 }
+
+.editable-controls input {
+  width : 100%;
+}
