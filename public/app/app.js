@@ -41,6 +41,15 @@ angular.module('app', [])
   })
   .filter("mysort", function() {
     return function(users) {
-      return _.orderBy(users, 'time', 'desc')
+      return _.chain(users)
+        .map(function(user, id) { // save id cause order by delete it
+          user.id = id;
+          return user;
+        })
+        .orderBy('time', 'desc')
+        .mapKeys(function(value) { // use id as key
+          return value.id;
+        })
+        .value();
     }
   });
