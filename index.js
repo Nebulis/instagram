@@ -14,7 +14,7 @@ app.use(serve(`${__dirname}/public`));
 app.use(bodyParser());
 
 router.post('/user', function *(next) {
-  var id = yield firebaseRef.push({name : this.request.body.name, count: 0});
+  var id = yield firebaseRef.push({name : this.request.body.name, count: 0, instagram:true});
   var data = yield firebaseRef.child(id.key()).once("value");
   this.status = 201;
   this.body = {
