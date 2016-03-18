@@ -9,7 +9,7 @@ class AppController {
     })
   }
   save(event) {
-    if(event.keyCode === 13 && this.name) {
+    if(event.keyCode === 13 && this.name && !this.loading) {
       this.loading = true;
       this.$http.post("/user", {name : this.name})
         .then(response => {

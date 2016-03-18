@@ -9,7 +9,7 @@
 <body ng-app="app">
     <div id="container" ng-controller="AppController as app">
         <div id="form">
-            <input type="text" ng-disabled="app.loading" placeholder="Enter name... Press enter to add name" ng-keypress="app.save($event)" ng-model="app.name"/>
+            <input type="text" placeholder="Enter name... Press enter to add name" ng-keypress="app.save($event)" ng-model="app.name"/>
         </div>
         <div id="list">
             <div class="user" ng-repeat="(id,user) in app.users | myfilter:app.name | mysort">
