@@ -1,0 +1,43 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
+    <script src="./app/app.js"></script>
+</head>
+<body ng-app="app">
+    <div id="container" ng-controller="AppController as app">
+        <div id="form">
+            <input type="text" ng-disabled="app.loading" placeholder="Enter name... Press enter to add name" ng-keypress="app.save($event)" ng-model="app.name"/>
+        </div>
+        <div id="list">
+            <div class="user" ng-repeat="(id,user) in app.users | myfilter:app.name">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-content">
+                            {{user.name}}
+                        </div>
+                        <div class="card-header-instagram">
+                            <button ng-class="{'primary' : user.instagram}" ng-click="app.update(id, {instagram : !user.instagram})">
+                                <i class="fa fa-instagram"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        {{user.count}}
+                    </div>
+                    <div class="card-actions">
+                        <button class="success" ng-click="app.update(id, {count : user.count+1})">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button class="danger" ng-click="app.update(id, {count : user.count-1})">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
