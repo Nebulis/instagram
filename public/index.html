@@ -18,12 +18,17 @@
             <div class="user" ng-repeat="(id,user) in app.users | myfilter:app.name | mysort">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-header-content">
-                            <span editable-text="user.name" buttons="no" onaftersave="app.update(id, {name : user.name})">{{user.name}}</span>
-                        </div>
                         <div class="card-header-instagram">
                             <button ng-class="{'primary' : user.instagram}" ng-click="app.update(id, {instagram : !user.instagram})">
                                 <i class="fa fa-instagram"></i>
+                            </button>
+                        </div>
+                        <div class="card-header-content">
+                            <span editable-text="user.name" buttons="no" onaftersave="app.update(id, {name : user.name})">{{user.name}}</span>
+                        </div>
+                        <div>
+                            <button ng-click="app.delete(id)" class="danger">
+                                <i class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>

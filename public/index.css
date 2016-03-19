@@ -18,8 +18,22 @@ body {
   justify-content: space-around;
 }
 
-.user {
-  flex: 0 30%;
+@media screen and (max-width : 640px) {
+  .user {
+    flex: 0 100%;
+  }
+}
+
+@media screen and (min-width : 640px) and (max-width: 980px){
+  .user {
+    flex: 0 50%;
+  }
+}
+
+@media screen and (min-width: 980px){
+  .user {
+    flex: 0 30%;
+  }
 }
 
 input {
@@ -80,7 +94,6 @@ input:focus {
   justify-content: center;
   align-items: center;
   flex : 1;
-  margin-left : 38px; /** add left margin to center cause of instagrame button **/
 }
 
 .card-actions {

@@ -31,9 +31,16 @@ router.put('/user/:id', function *(next) {
   var ref = firebaseRef.child(this.params.id);
   yield ref.update(this.request.body);
   ref = yield ref.once("value");
-  this.status = 200;this.body = {
+  this.status = 200;
+  this.body = {
     [ref.key()] : ref.val()
   };
+});
+
+router.delete('/user/:id', function *(next) {
+  var ref = firebaseRef.child(this.params.id);
+  yield ref.remove();
+  this.status = 204;
 });
 
 app

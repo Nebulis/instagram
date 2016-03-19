@@ -6,6 +6,7 @@ class AppController {
     this.users = {};
     $http.get("/user").then(response => {
       this.users = response.data
+      console.log(_.size(this.users));
     })
   }
   save(event) {
@@ -24,6 +25,13 @@ class AppController {
     this.$http.put("/user/"+id, updatedValues)
       .then(response => {
         _.assign(this.users, response.data);
+      });
+  }
+
+  delete(id) {
+    this.$http.delete("/user/"+id)
+      .then(response => {
+        delete this.users[id];
       });
   }
 }
