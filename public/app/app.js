@@ -1,31 +1,45 @@
 "use strict";
 
 class AppController {
-  constructor($http) {
+  constructor($http, $window, $location) {
     this.$http = $http;
-    this.users = {};
-    $http.get("/user").then(response => {
-      this.users = response.data
-    })
-  }
-  save(event) {
-    if(event.keyCode === 13 && this.name && !this.loading) {
-      this.loading = true;
-      this.$http.post("/user", {name : this.name})
-        .then(response => {
-          _.assign(this.users, response.data);
-          this.loading = false;
-          this.name = "";
-        });
+    this.$window= $window;
+    this.$location = $location;
+    this.isLogged = false;
+
+    // on login, get code from instagram
+    const code = this.$location.absUrl().split("?code=")[1];
+    // if code is present, this is a redirection from instagram so we need to perform login
+    var promise = null;
+    if(code) {
+      promise = this.login(code);
+    } else { // otherwise perform login
+      promise = this.login();
     }
+    promise.then(() => this.retrieveFollowersData())
   }
 
-  update(id, updatedValues) {
-    this.$http.put("/user/"+id, updatedValues)
-      .then(response => {
-        _.assign(this.users, response.data);
-      });
+  login(code) {
+    var data = {};
+    if(code) {
+      data.code = code;
+    }
+    return this.$http.post(`/login`, data).then((response) => {
+      this.isLogged = true; // delete code
+    })
   }
+
+  retrieveFollowersData() {
+    this.$http.get("/instagram/followers").then(response => {
+      console.log(response);
+    })
+  }
+
+  connect() {
+    const url = this.$location.absUrl().split("?code=")[0]; // delete code part
+    this.$window.location = `https://api.instagram.com/oauth/authorize/?client_id=1abd6d7d14cc46d3a65b2c218724f643&redirect_uri=${url}&response_type=code&scope=public_content+follower_list`;
+  }
+
 }
 
 angular.module('app', ["xeditable"])
