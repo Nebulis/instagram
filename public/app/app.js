@@ -5,7 +5,10 @@ class AppController {
     this.$http = $http;
     this.users = {};
     $http.get("/user").then(response => {
-      this.users = response.data
+      this.users = _.map(response.data, (user, id) => {
+        user.id = id;
+        return user;
+      });
       console.log(_.size(this.users));
     })
   }
@@ -14,7 +17,11 @@ class AppController {
       this.loading = true;
       this.$http.post("/user", {name : this.name})
         .then(response => {
-          _.assign(this.users, response.data);
+          var newUser = _.map(response.data, (user, id) => {
+            user.id = id;
+            return user;
+          });
+          this.users.push(newUser[0]);
           this.loading = false;
           this.name = "";
         });
@@ -24,14 +31,19 @@ class AppController {
   update(id, updatedValues) {
     this.$http.put("/user/"+id, updatedValues)
       .then(response => {
-        _.assign(this.users, response.data);
+        var newUser = _.map(response.data, (user, id) => {
+          user.id = id;
+          return user;
+        });
+        _.remove(this.users, user => user.id === id);
+        this.users.push(newUser[0]);
       });
   }
 
   delete(id) {
     this.$http.delete("/user/"+id)
       .then(response => {
-        delete this.users[id];
+        _.remove(this.users, user => user.id === id);
       });
   }
 }
@@ -50,14 +62,7 @@ angular.module('app', ["xeditable"])
   .filter("mysort", function() {
     return function(users) {
       return _.chain(users)
-        .map(function(user, id) { // save id cause order by delete it
-          user.id = id;
-          return user;
-        })
         .orderBy('time', 'desc')
-        .mapKeys(function(value) { // use id as key
-          return value.id;
-        })
         .value();
     }
   });

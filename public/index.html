@@ -15,19 +15,19 @@
             <input type="text" placeholder="Enter name... Press enter to add name" ng-keypress="app.save($event)" ng-model="app.name"/>
         </div>
         <div id="list">
-            <div class="user" ng-repeat="(id,user) in app.users | myfilter:app.name | mysort">
+            <div class="user" ng-repeat="user in app.users | myfilter:app.name | mysort">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-header-instagram">
-                            <button ng-class="{'primary' : user.instagram}" ng-click="app.update(id, {instagram : !user.instagram})">
+                            <button ng-class="{'primary' : user.instagram}" ng-click="app.update(user.id, {instagram : !user.instagram})">
                                 <i class="fa fa-instagram"></i>
                             </button>
                         </div>
                         <div class="card-header-content">
-                            <span editable-text="user.name" buttons="no" onaftersave="app.update(id, {name : user.name})">{{user.name}}</span>
+                            <span editable-text="user.name" buttons="no" onaftersave="app.update(user.id, {name : user.name})">{{user.name}}</span>
                         </div>
                         <div>
-                            <button ng-click="app.delete(id)" class="danger">
+                            <button ng-click="app.delete(user.id)" class="danger">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -36,10 +36,10 @@
                         {{user.count}}
                     </div>
                     <div class="card-actions">
-                        <button class="success" ng-click="app.update(id, {count : user.count+1})">
+                        <button class="success" ng-click="app.update(user.id, {count : user.count+1})">
                             <i class="fa fa-plus"></i>
                         </button>
-                        <button class="danger" ng-click="app.update(id, {count : user.count-1})">
+                        <button class="danger" ng-click="app.update(user.id, {count : user.count-1})">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
