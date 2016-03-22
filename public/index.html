@@ -13,9 +13,11 @@
     <div id="container" ng-controller="AppController as app">
         <div id="form">
             <input type="text" placeholder="Enter name... Press enter to add name" ng-keypress="app.save($event)" ng-model="app.name"/>
+            <select ng-model="app.sort" ng-options="item as item.label for item in app.sorts"></select>
+            <input type="number" ng-model="app.limit" ng-model-options="{debounce:500}"/>
         </div>
         <div id="list">
-            <div class="user" ng-repeat="user in app.users | myfilter:app.name | mysort | limitTo:50">
+            <div class="user" ng-repeat="user in app.users | myfilter:app.name | mysort:app.sort | limitTo:app.limit">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-header-instagram">

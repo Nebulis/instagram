@@ -11,6 +11,15 @@ class AppController {
       });
       console.log(_.size(this.users));
     })
+
+    this.sorts = [
+      {field : 'time', order : 'asc', label : 'Date de création croissant'},
+      {field : 'time', order : 'desc', label : 'Date de création décroissant'},
+      {field : 'count', order : 'asc', label : 'Nombre croissant'},
+      {field : 'count', order : 'desc', label : 'Nombre décroissant'}
+    ];
+    this.sort = this.sorts[0];
+    this.limit=50;
   }
   save(event) {
     if(event.keyCode === 13 && this.name && !this.loading) {
@@ -60,9 +69,9 @@ angular.module('app', ["xeditable"])
     }
   })
   .filter("mysort", function() {
-    return function(users) {
+    return function(users, opts) {
       return _.chain(users)
-        .orderBy('time', 'desc')
+        .orderBy(opts.field, opts.order)
         .value();
     }
   });
